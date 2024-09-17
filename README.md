@@ -6,4 +6,4 @@
 
 #### Languages Used = Node JS, HTML, CSS, Plain JS
 
-#### 4th Semester Minor Project of subject "Research Fundamentals"
+#### 4th Semester Minor Project of Subject "Research Fundamentals"
