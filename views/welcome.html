@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <script src="data.json" type="text/javascript"></script> -->
+</head>
+<body>
+    
+    <nav class="navbar">
+        <!-- here import from templates/navbar.html -->
+        <!-- must include bootstrap library here -->
+    </nav>    
+
+    <table border="1" id="datatable">
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+        </tr>
+        {{%TableContent%}}
+    </table>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        function fetchJSONData() {
+            fetch("./data.json")
+                .then((res) => {
+                    if (!res.ok) {
+                        throw new Error
+                            (`HTTP error! Status: ${res.status}`);
+                    }
+                    return res.json();
+                })
+                .then((data) => {
+                    fillData(data);
+                })
+                .catch((error) => 
+                       console.error("Unable to fetch data:", error));
+        }
+        fetchJSONData();
+
+        function fillData(data){
+            var table = document.getElementById('datatable');
+            for (i=0;i<data.length;i++){
+                //cLength is column length
+                let cLength = data[i].length;
+                let row = document.createElement('tr');
+                let column1 = document.createElement('td');
+                column1.append(data[i].name);
+                row.append(column1);
+                let column2 = document.createElement('td');
+                column2.append(data[i].address);
+                row.append(column2);
+                table.append(row);
+            }
+        }
+
+        const nav = document.querySelector('.navbar');
+        fetch('/navbar.html')
+            .then(res=>res.text())
+            .then(data=>{
+                nav.innerHTML = data;
+            })
+
+        //below to make navbar item active
+        setTimeout(activeNavbarItem, 500);
+        function activeNavbarItem(){
+            var location_number = 1;
+            var navbarLink = document.getElementsByClassName('nav-link');
+            var navItemLength = navbarLink.length;  
+            for (i=0;i<navItemLength;i++){
+                var classn = navbarLink[i].className;
+                var classes = classn.split(' ');
+                if (i==(location_number-1)){
+                    if (!(classes.includes('active'))){
+                        navbarLink[i].className += " active";
+                    }
+                }
+                else {
+                    if (classes.includes('active')){
+                        var newClass = "";
+                        for (j of classes){
+                            if (j=='active')
+                                continue;
+                            newClass += j;
+                            if (j != classes[classes.length-1])
+                                newClass += " ";
+                        }
+                        navbarLink[i].className = newClass;
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

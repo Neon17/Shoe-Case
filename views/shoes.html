@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <!-- here import from templates/navbar.html -->
+        <!-- must include bootstrap library here -->
+    </nav>
+
+    
+
+    <script>
+        const nav = document.querySelector('.navbar');
+        fetch('/navbar.html')
+            .then(res=>res.text())
+            .then(data=>{
+                nav.innerHTML = data;
+            })
+
+        //below to make navbar item active
+        setTimeout(activeNavbarItem, 500);
+        function activeNavbarItem(){
+            var location_number = 3;
+            var navbarLink = document.getElementsByClassName('nav-link');
+            var navItemLength = navbarLink.length;  
+            for (i=0;i<navItemLength;i++){
+                var classn = navbarLink[i].className;
+                var classes = classn.split(' ');
+                if (i==(location_number-1)){
+                    if (!(classes.includes('active'))){
+                        navbarLink[i].className += " active";
+                    }
+                }
+                else {
+                    if (classes.includes('active')){
+                        var newClass = "";
+                        for (j of classes){
+                            if (j=='active')
+                                continue;
+                            newClass += j;
+                            if (j != classes[classes.length-1])
+                                newClass += " ";
+                        }
+                        navbarLink[i].className = newClass;
+                    }
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
