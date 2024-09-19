@@ -31,16 +31,14 @@ let server = http.createServer((req,resp)=>{
         // console.log(data);
         if (data!=""){
             console.log(data);
-            console.log('not null');
             data = JSON.parse(data);
-            var content = null, tempcontent = null;
-            content = data.map((dat)=>{
-                tempcontent += `
+            var content = null;
+            data.map((dat)=>{
+                content += `
                 <tr>
                     <td>${dat.name}</td>
                     <td>${dat.address}</td>
                 </tr>`;
-                return tempcontent;
             })
         }
         resp.setHeader('Content-Type','text/html');
